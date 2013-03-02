@@ -20,13 +20,27 @@ function formattext() {
 
 	var deleteregexEl = document.getElementById('deleteregex');
 	var deleteregex = deleteregexEl.value;
+
+	var brakesToSpaceEl = document.getElementById('brakesToSpace');
+	var brakeNumberbrakeToSpaceEl = document.getElementById('brakeNumberbrakeToSpace');
+	var multiplespacesToNewlinesEl = document.getElementById('multiplespacesToNewlines');
 	
 	// format the text
-	text = text.replace(/\n\r?/g, ' ');
-	text = text.replace(new RegExp("  ","gm"), '\n\r');
-	text = text.replace(new RegExp("   ","gm"), '\n\r');
-
-	text = text.replace(new RegExp(deleteregex,"gm"), '');
+	if (brakesToSpaceEl.checked) {
+		text = text.replace(/\n\r?/g, ' ');
+	}
+	if (brakeNumberbrakeToSpaceEl.checked) {
+		text = text.replace(/\n\r?\d+\s*\n\r?/g, ' ');
+	}
+	
+	if (multiplespacesToNewlinesEl.checked) {
+		text = text.replace(new RegExp("  ","gm"), '\n\r');
+		text = text.replace(new RegExp("   ","gm"), '\n\r');
+	}
+	
+	if (deleteregex.length > 0) {
+		text = text.replace(new RegExp(deleteregex,"gm"), '');
+	}
 
 	// show the formatted text
 	textEl.value = text;
@@ -48,6 +62,9 @@ function formattext() {
 
 	<textarea id="text" rows="20" cols="100"></textarea>
 	<br /><br />
+	<input type="checkbox" id="brakesToSpace" /> convert brakes to space<br>
+	<input type="checkbox" id="brakeNumberbrakeToSpace" /> convert brake-Number-brake to space<br>
+	<input type="checkbox" id="multiplespacesToNewlines" /> convert multiple spaces to new lines<br>
 	<input type="button" value="Format" class="btn" onclick="formattext()" />
 	<br /><br />
 	Delete following regular expression:
