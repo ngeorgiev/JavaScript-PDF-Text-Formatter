@@ -42,6 +42,19 @@ function formattext() {
 		text = text.replace(new RegExp(deleteregex,"gm"), '');
 	}
 
+	text = text.replace(/:\s+\n\r?/g, ":\n\r");
+	text = text.replace(/\.\s+\n\r?/g, ".\n\r");
+	
+	var textParagraphs = text.split(/\.\n\r/);
+// 	alert(textParagraphs.length);
+	for (var i=0; i < textParagraphs.length; i++) {
+		textParagraphs[i] = textParagraphs[i].replace(/\n\r?/g, " ");
+	}
+	text = textParagraphs.join(".\n\r");
+	
+	// convert " text1983 " to " text 1983 "
+	text = text.replace(/\s+(\w+)(\d+)\s+/g, " $1 $2 ");
+
 	// show the formatted text
 	textEl.value = text;
 }
@@ -67,7 +80,7 @@ function formattext() {
 	<input type="checkbox" id="multiplespacesToNewlines" /> convert multiple spaces to new lines<br>
 	<input type="button" value="Format" class="btn" onclick="formattext()" />
 	<br /><br />
-	Delete following regular expression:
+	Delete the following regular expression:
 	<input id="deleteregex" type="text" />
 	
 	<br /><br />
