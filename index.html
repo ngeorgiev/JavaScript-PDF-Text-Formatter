@@ -44,9 +44,10 @@ function formattext() {
 
 	text = text.replace(/:\s+\n\r?/g, ":\n\r");
 	text = text.replace(/\.\s+\n\r?/g, ".\n\r");
-	
-	var textParagraphs = text.split(/\.\n\r/);
-// 	alert(textParagraphs.length);
+
+	// connect the new lines in every paragraph
+	var textParagraphs = text.split(/\.\s*\n\r?/);
+	alert(textParagraphs.length);
 	for (var i=0; i < textParagraphs.length; i++) {
 		textParagraphs[i] = textParagraphs[i].replace(/\n\r?/g, " ");
 	}
