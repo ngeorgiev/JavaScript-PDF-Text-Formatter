@@ -18,9 +18,6 @@ function formattext() {
 	var textEl = document.getElementById('text');
 	var text = textEl.value;
 
-	var deleteregexEl = document.getElementById('deleteregex');
-	var deleteregex = deleteregexEl.value;
-
 	var brakesToSpaceEl = document.getElementById('brakesToSpace');
 	var brakeNumberbrakeToSpaceEl = document.getElementById('brakeNumberbrakeToSpace');
 	var multiplespacesToNewlinesEl = document.getElementById('multiplespacesToNewlines');
@@ -36,10 +33,6 @@ function formattext() {
 	if (multiplespacesToNewlinesEl.checked) {
 		text = text.replace(new RegExp("  ","gm"), '\n\r');
 		text = text.replace(new RegExp("   ","gm"), '\n\r');
-	}
-	
-	if (deleteregex.length > 0) {
-		text = text.replace(new RegExp(deleteregex,"gm"), '');
 	}
 
 	text = text.replace(/:\s+\n\r?/g, ":\n\r");
@@ -63,6 +56,23 @@ function formattext() {
 	textEl.value = text;
 }
 
+
+function removeRegex(removeInputId) {
+	
+	var textEl = document.getElementById('text');
+	var scrollTop = textEl.scrollTop;
+	var text = textEl.value;
+	var removeregexEl = document.getElementById(removeInputId);
+	var removeregex = removeregexEl.value;
+	
+	if (removeregex.length > 0) {
+		text = text.replace(new RegExp(removeregex,"gm"), '');
+	}
+	
+	textEl.value = text;
+	textEl.scrollTop = scrollTop;
+}
+
 //-->
 </script>
 
@@ -84,8 +94,9 @@ function formattext() {
 	<input type="checkbox" id="multiplespacesToNewlines" /> convert multiple spaces to new lines<br>
 	<input type="button" value="Format" class="btn" onclick="formattext()" />
 	<br /><br />
-	Delete the following regular expression:
-	<input id="deleteregex" type="text" />
+	Remove the following <a href="http://www.visibone.com/regular-expressions/">regular expression</a>:<br/>
+	<input id="removeregex1" type="text" /> <input type="button" value="Remove" onclick="removeRegex('removeregex1')" /><br/>
+	<input id="removeregex2" type="text" /> <input type="button" value="Remove" onclick="removeRegex('removeregex2')" /><br/>
 	
 	<br /><br />
 	<span style="float: right;">v0.1</span>
